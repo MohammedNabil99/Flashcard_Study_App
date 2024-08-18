@@ -23,7 +23,8 @@ export async function GET(req, { params }) {
 }
 export async function POST(req) {
   try {
-    const origin = req.headers.get("origin") || "http://localhost:3000";
+    const origin =
+      "https://ai-flashcard-study-app.vercel.app/" || "http://localhost:3000";
 
     const params = {
       mode: "subscription",
