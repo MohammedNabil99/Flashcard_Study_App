@@ -23,7 +23,7 @@ export async function GET(req, { params }) {
 }
 export async function POST(req) {
   try {
-    const origin = req.headers.get("origin") || "http://localhost:3000"; // Fallback to localhost
+    const origin = req.headers.get("origin") || "http://localhost:3000";
 
     const params = {
       mode: "subscription",

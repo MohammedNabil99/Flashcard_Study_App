@@ -4,7 +4,16 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import getStripe from "../../utils/get-stripe";
 import { useSearchParams } from "next/navigation";
-import { CircularProgress, Container, Typography, Box } from "@mui/material";
+import { SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
+import {
+  CircularProgress,
+  Container,
+  Typography,
+  Box,
+  AppBar,
+  Toolbar,
+  Button,
+} from "@mui/material";
 
 const ResultPage = () => {
   const router = useRouter();
@@ -70,36 +79,68 @@ const ResultPage = () => {
   }
 
   return (
-    <Container
-      maxWidth="100vw"
-      sx={{
-        textAlign: "center",
-        mt: 4,
-      }}
-    >
-      {session.payment_status === "paid" ? (
-        <>
-          <Typography variant="h4">Happy Learning!</Typography>
-          <Box sx={{ mt: 22 }}>
-            <Typography variant="h6">Session ID: {session_id}</Typography>
-            <Typography variant="body1">
-              We have received your payment. You wll receive an email with the
-              order details soon!
-            </Typography>
-          </Box>
-        </>
-      ) : (
-        <>
-          <Typography variant="h4">Payment Failed!</Typography>
-          <Box sx={{ mt: 22 }}>
-            <Typography variant="h6">Session ID: {session_id}</Typography>
-            <Typography variant="body1">
-              Payment was not successful, please try again.
-            </Typography>
-          </Box>
-        </>
-      )}
-    </Container>
+    <>
+      <AppBar position="static" style={{ width: "100vw" }}>
+        <Toolbar>
+          <Typography variant="h6" style={{ flexGrow: 1 }}>
+            Cognitive Cards
+          </Typography>
+          <SignedOut>
+            <Button color="inherit" href="/sign-in">
+              Login
+            </Button>
+            <Button color="inherit" href="/sign-up">
+              Sign Up
+            </Button>
+          </SignedOut>
+          <UserButton />
+          <Button color="inherit" href="/">
+            Home
+          </Button>
+          <SignedIn>
+            <Button color="inherit" onClick={() => router.push("/generate")}>
+              Generate
+            </Button>
+          </SignedIn>
+          <SignedIn>
+            <Button color="inherit" href="/flashcards">
+              Sets
+            </Button>
+          </SignedIn>
+        </Toolbar>
+      </AppBar>
+
+      <Container
+        maxWidth="100vw"
+        sx={{
+          textAlign: "center",
+          mt: 4,
+        }}
+      >
+        {session.payment_status === "paid" ? (
+          <>
+            <Typography variant="h4">Happy Learning!</Typography>
+            <Box sx={{ mt: 22 }}>
+              <Typography variant="h6">Session ID: {session_id}</Typography>
+              <Typography variant="body1">
+                We have received your payment. You wll receive an email with the
+                order details soon!
+              </Typography>
+            </Box>
+          </>
+        ) : (
+          <>
+            <Typography variant="h4">Payment Failed!</Typography>
+            <Box sx={{ mt: 22 }}>
+              <Typography variant="h6">Session ID: {session_id}</Typography>
+              <Typography variant="body1">
+                Payment was not successful, please try again.
+              </Typography>
+            </Box>
+          </>
+        )}
+      </Container>
+    </>
   );
 };
 

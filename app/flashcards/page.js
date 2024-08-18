@@ -1,6 +1,6 @@
 "use client";
 
-import { useUser } from "@clerk/nextjs";
+import { SignedOut, SignedIn, UserButton, useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase";
@@ -11,13 +11,23 @@ import {
   CardContent,
   Container,
   Grid,
+  Button,
   Typography,
+  AppBar,
+  Toolbar,
 } from "@mui/material";
 
 export default function Flashcards() {
   const { isLoaded, isSignedIn, user } = useUser();
   const [flashcards, setFlashcards] = useState([]);
   const router = useRouter();
+
+  useEffect(() => {
+    if (isLoaded && !isSignedIn) {
+      // Redirect to the sign-in page if the user is not signed in
+      router.push("/sign-in");
+    }
+  }, [isLoaded, isSignedIn, router]);
 
   useEffect(() => {
     async function getFlashcards() {
@@ -33,11 +43,13 @@ export default function Flashcards() {
       }
     }
 
-    getFlashcards();
-  }, [user]);
+    if (isSignedIn) {
+      getFlashcards();
+    }
+  }, [user, isSignedIn]);
 
   if (!isLoaded || !isSignedIn) {
-    return <></>;
+    return null; // Render nothing or a loading spinner while checking auth status
   }
 
   const handleCardClick = (id) => {
@@ -45,27 +57,58 @@ export default function Flashcards() {
   };
 
   return (
-    <Container maxWidth="100vw">
-      <Typography variant="h4" sx={{ mt: 6, color: "navy" }}>
-        Flashcard Topics
-      </Typography>
-      <Grid container spacing={3} sx={{ mt: 4 }}>
-        {flashcards.map((flashcard, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index}>
-            <Card>
-              <CardActionArea
-                onClick={() => {
-                  handleCardClick(flashcard.name); // Pass the correct id
-                }}
-              >
-                <CardContent>
-                  <Typography variant="h6">{flashcard.name}</Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
+    <>
+      <AppBar position="static" style={{ width: "100vw" }}>
+        <Toolbar>
+          <Typography variant="h6" style={{ flexGrow: 1 }}>
+            Cognitive Cards
+          </Typography>
+          <SignedOut>
+            <Button color="inherit" href="/sign-in">
+              Login
+            </Button>
+            <Button color="inherit" href="/sign-up">
+              Sign Up
+            </Button>
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+          <Button color="inherit" href="/">
+            Home
+          </Button>
+          <SignedIn>
+            <Button color="inherit" href="/generate">
+              Generate
+            </Button>
+          </SignedIn>
+          <SignedIn>
+            <Button color="inherit" href="/flashcards">
+              Sets
+            </Button>
+          </SignedIn>
+        </Toolbar>
+      </AppBar>
+
+      <Container maxWidth="100vw">
+        <Grid container spacing={3} sx={{ mt: 4 }}>
+          {flashcards.map((flashcard, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <Card>
+                <CardActionArea
+                  onClick={() => {
+                    handleCardClick(flashcard.name); // Pass the correct id
+                  }}
+                >
+                  <CardContent>
+                    <Typography variant="h6">{flashcard.name}</Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    </>
   );
 }
