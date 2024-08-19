@@ -21,13 +21,16 @@ NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/dashboard
 NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/dashboard
 
 #Supabase: https://supabase.com/docs
+
 NEXT_PUBLIC_SUPABASE_URL
 NEXT_PUBLIC_SUPABASE_ANON
 
 #OpenAI: https://openai.com/index/openai-api/
+
 OPENAI_API_KEY
 
 #STRIPE: https://docs.stripe.com/development
+
 NEXT_PUBLIC_STRIPE_PUBLIC_KEY
 STRIPE_SECRET_KEY
 
