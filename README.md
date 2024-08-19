@@ -13,18 +13,20 @@ To run the application locally on your device, follow below steps:
 #Clerk: https://clerk.com/docs
 
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+
 CLERK_SECRET_KEY
-NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
-NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
-NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL=/cards
-NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL=/cards
-NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/dashboard
-NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/dashboard
+
+- NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+- NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+- NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL=/cards
+- NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL=/cards
+- NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/dashboard
+- NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/dashboard
 
 #Supabase: https://supabase.com/docs
 
-NEXT_PUBLIC_SUPABASE_URL
-NEXT_PUBLIC_SUPABASE_ANON
+- NEXT_PUBLIC_SUPABASE_URL
+- NEXT_PUBLIC_SUPABASE_ANON
 
 #OpenAI: https://openai.com/index/openai-api/
 
@@ -32,7 +34,7 @@ OPENAI_API_KEY
 
 #STRIPE: https://docs.stripe.com/development
 
-NEXT_PUBLIC_STRIPE_PUBLIC_KEY
-STRIPE_SECRET_KEY
+- NEXT_PUBLIC_STRIPE_PUBLIC_KEY
+- STRIPE_SECRET_KEY
 
 Once all the secret keys are added, open [http://localhost:3000](http://localhost:3000) with your browser to see the application running.
